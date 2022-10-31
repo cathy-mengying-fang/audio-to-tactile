@@ -21,7 +21,7 @@ limitations under the License.
 <title>Audio-to-Tactile BLE web client</title>
 </head>
 <body>
-  <h1>Interval training</h1>
+  <h1>Directional Haptics</h1>
 
   <div id="connectionPanel">
     <button id="clientConnectButton"
@@ -430,7 +430,7 @@ limitations under the License.
     tr.insertCell();  // Test button.
 
 
-    NUM_PATTERNS = 7;
+    NUM_PATTERNS = 4;
 
 
     enableAll.addEventListener('change', function () {
@@ -488,7 +488,7 @@ limitations under the License.
     // });
 
 
-    var notes_arr = ["C4","D4","E4","F4","G4","A4","B4"];
+
 
     for (var c = 0; c < NUM_PATTERNS; c++) {
       var label = document.createElement('label');  // Make text label element.
@@ -542,41 +542,42 @@ limitations under the License.
 
       ((c, patternButton) => {
 
-        var delayInMilliseconds = 300; //0.1 second
+        var delayInMilliseconds = 500; //0.1 second
 
         patternButton.addEventListener('click', function () {
-          sampler.triggerAttackRelease([notes_arr[0],notes_arr[0+c]], 1);
-          setTimeout(function() {
-            bleInstance.requestSetChannelGainUpdate(8-1,8-1); // tactor number -1
-            }, delayInMilliseconds);
+
+          if (c == 0){ //right or east: 6 and 2
+            
+            // sampler.triggerAttackRelease(["C4","E4"], 1.5);
+
+
+            bleInstance.requestSetChannelGainUpdate(5,5); // tactor number -1
             setTimeout(function() {
-            bleInstance.requestSetChannelGainUpdate(8-1-c,8-1-c);
+            bleInstance.requestSetChannelGainUpdate(1,1);
             }, delayInMilliseconds);
-          
-
-
-
-
-          // if (c == 0){ //right or east: 6 and 2
+          }
+          else if (c == 1){ //left or west: 2 and 6
+            // sampler.triggerAttackRelease("C4", 1.5);
             
-          //   sampler.triggerAttackRelease([notes_arr[0],notes_arr[0+c]], 1.5);
-
-
-          //   bleInstance.requestSetChannelGainUpdate(8,8); // tactor number -1
-          //   setTimeout(function() {
-          //   bleInstance.requestSetChannelGainUpdate(8,8);
-          //   }, delayInMilliseconds);
-          // }
-          // else if (c == 1){ //right or east: 6 and 2
+            bleInstance.requestSetChannelGainUpdate(1,1);
+            setTimeout(function() {
+            // sampler.triggerAttackRelease("E4", 1.5);
+            bleInstance.requestSetChannelGainUpdate(5,5);
+            }, delayInMilliseconds);
+          }
+          else if (c == 2){ //up or north: 4 and 8
+            bleInstance.requestSetChannelGainUpdate(3,3);
+            setTimeout(function() {
+            bleInstance.requestSetChannelGainUpdate(7,7);
+            }, delayInMilliseconds);
+          }
+          else if (c == 3){ //down or south: 8 and 4
+            bleInstance.requestSetChannelGainUpdate(7,7);
+            setTimeout(function() {
+            bleInstance.requestSetChannelGainUpdate(3,3);
+            }, delayInMilliseconds);
             
-          //   sampler.triggerAttackRelease(["C4","C4"], 1.5);
-
-
-          //   bleInstance.requestSetChannelGainUpdate(8,8); // tactor number -1
-          //   setTimeout(function() {
-          //   bleInstance.requestSetChannelGainUpdate(7,7);
-          //   }, delayInMilliseconds);
-          // }
+          }
 
 
 

@@ -38,9 +38,22 @@ fieldset {
   width: 12em;
 }
 
+#customMap {
+  width: 30em;
+}
+
+#customMap .knobSlider {
+  width: 12em;
+}
+
 .channelTest {
   margin-left: 1em;
 }
+
+.customTest {
+  margin-left: 1em;
+}
+
 
 #clientConnectButton {
   font-size: 110%;
